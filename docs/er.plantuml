@@ -1,0 +1,36 @@
+@startuml yond
+hide circle
+
+skinparam linetype ortho
+
+left to right direction
+
+entity "user" as user {
+    * id: INT <<PK>>
+    --
+    * name : TEXT
+}
+
+'タスク群
+entity "list" as list {
+    * id: INT <<PK>>
+    --
+    * user_id : user.id <<FK>>
+    * name : TEXT 'リスト名
+}
+
+'タスク
+entity "task" as task {
+    * id: INT <<PK>>
+    --
+    * user_id : user.id <<FK>>
+    * list_id : list.id <<FK>>
+    * name : TEXT
+    * description : VARCHAR
+    * deadline : DATE
+    * isAction : bool
+    * priority : enum{"high" , "medium" , "low"}
+}
+user ||--o{ list
+list ||--o{ task
+@enduml
