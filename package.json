@@ -1,0 +1,32 @@
+{
+  "name": "todo-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "todo-app",
+    "todo-api"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev:todo-app": "npm run dev --workspace=todo-app",
+    "dev:todo-api": "npm run dev --workspace=todo-api",
+    "build:todo-app": "npm run build --workspace=todo-app",
+    "build:todo-api": "npm run build --workspace=todo-api",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:seed": "tsx ./prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.10.1",
+    "prisma": "^6.10.1",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,16 +1,26 @@
 #!/bin/bash
 
-# docker setup script for the project
+# Docker 環境のセットアップ
 echo "Setting up Docker environment..."
 docker-compose up -d --build
 
-# todo-app setup
-echo "Setting up todo-app..."
-cd todo-app
+# ルートで全体のパッケージをインストール（workspaces 含む）
+echo "Installing dependencies..."
 npm install
 
-# migration for todo-app
+# Prisma のマイグレーション実行
+echo "Running Prisma migrations..."
 npx prisma migrate dev --name init
 
-# start the todo-app
-npm run dev
+# 並列で todo-api と todo-app を起動（バックグラウンドジョブで実行）
+echo "Starting todo-api and todo-app..."
+npm run dev:todo-api &
+npm run dev:todo-app &
+wait
+
+# テストデータの投入
+echo "Seeding database with test data..."
+npm run prisma:seed
+
+# 完了メッセージ
+echo "Setup complete! You can now access the applications."
