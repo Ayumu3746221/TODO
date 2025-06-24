@@ -6,6 +6,7 @@
     "todo-app",
     "todo-api"
   ],
+  "type": "module",
   "scripts": {
     "dev:todo-app": "npm run dev --workspace=todo-app",
     "dev:todo-api": "npm run dev --workspace=todo-api",
@@ -13,14 +14,19 @@
     "build:todo-api": "npm run build --workspace=todo-api",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "tsx ./prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx ./prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^6.10.1",
     "prisma": "^6.10.1",
-    "@prisma/client": "^6.10.1"
+    "tsx": "^4.20.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.19.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

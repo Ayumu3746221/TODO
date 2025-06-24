@@ -17,3 +17,10 @@ echo "Starting todo-api and todo-app..."
 npm run dev:todo-api &
 npm run dev:todo-app &
 wait
+
+# テストデータの投入
+echo "Seeding database with test data..."
+npm run prisma:seed
+
+# 完了メッセージ
+echo "Setup complete! You can now access the applications."
