@@ -1,7 +1,27 @@
-export const groupTasksByList = (tasks: any[]) => {
+interface TaskWithList {
+  id: number;
+  name: string;
+  deadline: Date | string | null;
+  priority: "high" | "medium" | "low";
+  list: {
+    id: number;
+    name: string;
+  };
+}
+
+export const groupTasksByList = (tasks: Array<TaskWithList>) => {
   const listsMap = new Map<
     number,
-    { id: number; name: string; tasks: any[] }
+    {
+      id: number;
+      name: string;
+      tasks: Array<{
+        id: number;
+        name: string;
+        deadline: Date | string | null;
+        priority: "high" | "medium" | "low";
+      }>;
+    }
   >();
 
   tasks.forEach((task) => {
