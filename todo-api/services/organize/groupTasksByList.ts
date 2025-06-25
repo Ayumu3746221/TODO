@@ -1,13 +1,5 @@
-interface TaskWithList {
-  id: number;
-  name: string;
-  deadline: Date | string | null;
-  priority: "high" | "medium" | "low";
-  list: {
-    id: number;
-    name: string;
-  };
-}
+import type { TaskWithList } from "../../../types/Task.js";
+import { normalizeTask } from "./normalizeTask.js";
 
 export const groupTasksByList = (tasks: Array<TaskWithList>) => {
   const listsMap = new Map<
@@ -25,18 +17,12 @@ export const groupTasksByList = (tasks: Array<TaskWithList>) => {
   >();
 
   tasks.forEach((task) => {
-    const list = task.list;
-    if (!listsMap.has(list.id)) {
-      listsMap.set(list.id, { id: list.id, name: list.name, tasks: [] });
+    const listId = task.list.id;
+    if (!listsMap.has(listId)) {
+      listsMap.set(listId, { id: listId, name: task.list.name, tasks: [] });
     }
-    listsMap.get(list.id)?.tasks.push({
-      id: task.id,
-      name: task.name,
-      deadline:
-        task.deadline instanceof Date
-          ? task.deadline.toISOString()
-          : task.deadline,
-      priority: task.priority,
+    listsMap.get(listId)?.tasks.push({
+      ...normalizeTask(task),
     });
   });
 
