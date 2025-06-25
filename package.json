@@ -14,7 +14,8 @@
     "build:todo-api": "npm run build --workspace=todo-api",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:seed": "tsx ./prisma/seed.ts"
+    "prisma:seed": "tsx ./prisma/seed.ts",
+    "test": "vitest"
   },
   "prisma": {
     "seed": "tsx ./prisma/seed.ts"
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@types/node": "^20.19.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
