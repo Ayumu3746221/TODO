@@ -7,14 +7,17 @@ import { toggleActionStateById } from "services/toggleActionStateById.js";
 const todoRouter = new Hono();
 
 todoRouter.get("/:userId", async (c) => {
-  try {
-    const userId = Number(c.req.param("userId"));
-    const data = await getUnfinishedTasks(userId);
-    return c.json(data);
-  } catch (error) {
-    console.error("Error retrieving tasks:", error);
-    return c.json({ error: "Internal Server Error" }, 500);
+  const userId = Number(c.req.param("userId"));
+  const response = await getUnfinishedTasks(userId);
+  if (response.status && response.message) {
+    return c.json({ error: response.message }, response.status);
   }
+  return c.json({
+    status: STATUS_CODES.OK,
+    message: "Unfinished tasks retrieved successfully",
+    user: response.user,
+    lists: response.lists,
+  });
 });
 
 todoRouter.patch("/:taskId", async (c) => {

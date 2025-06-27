@@ -10,7 +10,12 @@ export const getUnfinishedTasks = async (userId: number) => {
 
     return { user, lists };
   } catch (error) {
-    console.error("Error retrieving tasks:", error);
-    throw error;
+    const status =
+      error instanceof Error && (error as any).status
+        ? (error as any).status
+        : 500;
+    const message =
+      error instanceof Error ? error.message : "Internal Server Error";
+    return { status, message };
   }
 };
