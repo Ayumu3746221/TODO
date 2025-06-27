@@ -5,7 +5,9 @@ export const getUserById = async (userId: number) => {
     where: { id: userId },
   });
   if (!user) {
-    throw new Error("User not found");
+    const error = new Error(`User with ID ${userId} not found`);
+    (error as any).status = 404;
+    throw error;
   }
   return user;
 };

@@ -38,6 +38,8 @@ describe("getUserById", () => {
   it("should throw an error when user does not exist", async () => {
     mockedFindUnique.mockResolvedValue(null);
 
-    await expect(getUserById(999)).rejects.toThrow("User not found");
+    await expect(getUserById(999)).rejects.toThrow(
+      "User with ID 999 not found"
+    );
   });
 });
